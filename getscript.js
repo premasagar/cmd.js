@@ -24,8 +24,11 @@
         // single script
         getScript('http://example.com/jquery.js', callback);
         
-        // set options - charset is added as an attribute to the <script> element; targetWindow could be an iframe window, etc
-        getScript('http://example.com/jquery.js', callback, {charset:'utf-8', targetWindow:window});
+        // set options
+            // charset is added as an attribute to the <script> element ('utf-8' by default);
+            // target could be an iframe window, etc (global window by default);
+            // keep is boolean - should the script element in the document head remain after the script has loaded? (false by default)
+        getScript('http://example.com/jquery.js', callback, {charset:'utf-8', target:window, keep:false});
         
         // multiple scripts
         getScript(['jquery.js', 'example.js'], callback);
@@ -45,13 +48,13 @@ function getScript(srcs, callback, options){
     function single(src, callback, options){
         var
             charset = options.charset,
-            targetWindow = options.targetWindow,
-            document = targetWindow.document,
+            keep = options.keep,
+            target = options.target,
+            document = target.document,
             head = document.getElementsByTagName('head')[0],
             script = document.createElement('script'),
             loaded;
-            
-        script.src = src;
+        
         script.type = 'text/javascript'; // Needed for some gitchy browsers, outside of HTML5
         script.charset = charset;
         script.onload = script.onreadystatechange = function(){
@@ -59,12 +62,23 @@ function getScript(srcs, callback, options){
             if (!loaded && (!state || state === 'complete' || state === 'loaded')){
                 // Handle memory leak in IE
                 script.onload = script.onreadystatechange = null;
-                // head.removeChild(script); // Worth removing script element once loaded?
+                
+                // Remove script element once loaded
+                if (!keep){
+                    head.removeChild(script); 
+                }
                 
                 loaded = true;
-                callback.call(targetWindow);
+                callback.call(target);
             }
         };
+        // Async loading (extra hinting for compliant browsers)
+        script.async = true;
+        
+        // Apply the src
+        script.src = src;
+        
+        // And go...
         head.appendChild(script);
     }
 
@@ -88,7 +102,7 @@ function getScript(srcs, callback, options){
         // Check if all scripts have loaded
         checkIfComplete = function(){
             if (++loaded === length){
-                callback.call(options.targetWindow);
+                callback.call(options.target);
             }
         };
         
@@ -107,8 +121,8 @@ function getScript(srcs, callback, options){
     if (!options.charset){
         options.charset = 'utf-8';
     }
-    if (!options.targetWindow){
-        options.targetWindow = window;
+    if (!options.target){
+        options.target = window;
     }
     
     callback = callback || function(){};        
