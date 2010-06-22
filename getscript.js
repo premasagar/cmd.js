@@ -114,7 +114,7 @@ function getScript(srcs, callback, options){
 
     // **
     
-    var
+    var window = this,
         method = (typeof srcs === 'string') ? single : multiple;
     
     options = options || {};
