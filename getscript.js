@@ -36,8 +36,9 @@
     to do
         synchronous loading of multiple scripts that have dependencies on one another
         
-
 */
+
+/*jslint onevar: true, browser: true, devel: true, undef: true, eqeqeq: true, bitwise: true, regexp: false, strict: true, newcap: false, immed: true, nomen: false, evil: true*//*global window: true, self: true */
 
 function getScript(srcs, callback, options){
     /**
@@ -127,5 +128,3 @@ function getScript(srcs, callback, options){
     callback = callback || function(){};        
     return method.call(window, srcs, callback, options);
 }
-
-/*jslint browser: true, devel: true, onevar: true, undef: true, eqeqeq: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
