@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*!
 * getScript
@@ -22,16 +22,16 @@
         
     examples
         // single script
-        getScript('http://example.com/jquery.js', callback);
+        getScript("http://example.com/jquery.js", callback);
         
         // set options
-            // charset is added as an attribute to the <script> element ('utf-8' by default);
+            // charset is added as an attribute to the <script> element ("utf-8" by default);
             // target could be an iframe window, etc (global window by default);
             // keep is boolean - should the script element in the document head remain after the script has loaded? (false by default)
-        getScript('http://example.com/jquery.js', callback, {charset:'utf-8', target:window, keep:false});
+        getScript("http://example.com/jquery.js", callback, {charset:"utf-8", target:window, keep:false});
         
         // multiple scripts
-        getScript(['jquery.js', 'example.js'], callback);
+        getScript(["jquery.js", "example.js"], callback);
         
     to do
         synchronous loading of multiple scripts that have dependencies on one another
@@ -46,20 +46,20 @@ function getScript(srcs, callback, options){
      * @param {Function} callback Called when the script has loaded
      */
     function single(src, callback, options){
-        var
-            charset = options.charset,
+        var charset = options.charset,
             keep = options.keep,
             target = options.target,
             document = target.document,
-            head = document.getElementsByTagName('head')[0],
-            script = document.createElement('script'),
+            head = document.getElementsByTagName("head")[0],
+            script = document.createElement("script"),
             loaded;
         
-        script.type = 'text/javascript'; // Needed for some gitchy browsers, outside of HTML5
+        script.type = "text/javascript"; // Needed for some gitchy browsers, outside of HTML5
         script.charset = charset;
         script.onload = script.onreadystatechange = function(){
             var state = this.readyState;
-            if (!loaded && (!state || state === 'complete' || state === 'loaded')){
+            
+            if (!loaded && (!state || state === "complete" || state === "loaded")){
                 // Handle memory leak in IE
                 script.onload = script.onreadystatechange = null;
                 
@@ -94,8 +94,7 @@ function getScript(srcs, callback, options){
      */
 
     function multiple(srcs, callback, options){
-        var
-            length = srcs.length,
+        var length = srcs.length,
             loaded = 0,
             checkIfComplete, i;
         
@@ -115,11 +114,11 @@ function getScript(srcs, callback, options){
     // **
     
     var window = self,
-        method = (typeof srcs === 'string') ? single : multiple;
+        method = (typeof srcs === "string") ? single : multiple;
     
     options = options || {};
     if (!options.charset){
-        options.charset = 'utf-8';
+        options.charset = "utf-8";
     }
     if (!options.target){
         options.target = window;
@@ -130,4 +129,3 @@ function getScript(srcs, callback, options){
 }
 
 /*jslint browser: true, devel: true, onevar: true, undef: true, eqeqeq: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
-/*global window: false */
