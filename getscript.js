@@ -114,7 +114,7 @@ function getScript(srcs, callback, options){
 
     // **
     
-    var window = this,
+    var window = self,
         method = (typeof srcs === 'string') ? single : multiple;
     
     options = options || {};
@@ -126,7 +126,8 @@ function getScript(srcs, callback, options){
     }
     
     callback = callback || function(){};        
-    return method.call(this, srcs, callback, options);
+    return method.call(window, srcs, callback, options);
 }
 
 /*jslint browser: true, devel: true, onevar: true, undef: true, eqeqeq: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
+/*global window: false */
