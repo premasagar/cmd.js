@@ -21,14 +21,19 @@
         getScript
         
     examples
-        // single script
-        getScript("http://example.com/jquery.js", callback);
+        single script
+            getScript('http://example.com/jquery.js', callback);
         
-        // set options
-            // charset is added as an attribute to the <script> element ("utf-8" by default);
-            // target could be an iframe window, etc (global window by default);
-            // keep is boolean - should the script element in the document head remain after the script has loaded? (false by default)
-        getScript("http://example.com/jquery.js", callback, {charset:"utf-8", target:window, keep:false});
+        set options
+            charset:
+                added as an attribute to the <script> element ('utf-8' by default);
+            target:
+                an iframe or other window (global 'window' by default);
+            keep:
+                boolean - should the script element in the document head remain after the script has loaded? (false by default)
+            async: whether async attribute is added (true by default)
+            
+        getScript('http://example.com/jquery.js', callback, {charset:'utf-8', target:window, keep:false});
         
         // multiple scripts
         getScript(["jquery.js", "example.js"], callback);
@@ -50,12 +55,13 @@ function getScript(srcs, callback, options){
         var charset = options.charset,
             keep = options.keep,
             target = options.target,
+            async = options.async,
             document = target.document,
-            head = document.getElementsByTagName("head")[0],
-            script = document.createElement("script"),
-            loaded;
+            head = document.getElementsByTagName('head')[0],
+            script = document.createElement('script'),
+            loaded = false;
         
-        script.type = "text/javascript"; // Needed for some gitchy browsers, outside of HTML5
+        script.type = 'text/javascript'; // This is the default for HTML5 documents, but should should be applied for pre-HTML5 documents, or errors may be seen in some browsers.
         script.charset = charset;
         script.onload = script.onreadystatechange = function(){
             var state = this.readyState;
@@ -73,13 +79,13 @@ function getScript(srcs, callback, options){
                 callback.call(target);
             }
         };
-        // Async loading (extra hinting for compliant browsers)
-        script.async = true;
+        // Async loading (extra hinting for compliant browsers; defaults to true)
+        script.async = (async === false);
         
         // Apply the src
         script.src = src;
         
-        // And go...
+        // Go...
         head.appendChild(script);
     }
 
