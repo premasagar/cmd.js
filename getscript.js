@@ -1,5 +1,3 @@
-"use strict";
-
 /*!
 * getScript
 *   github.com/premasagar/mishmash/tree/master/getscript/
@@ -38,17 +36,20 @@
         // multiple scripts
         getScript(["jquery.js", "example.js"], callback);
         
-    to do
-        ordered loading of multiple scripts that have dependencies on one another
-        
     callback(status)
-        status indicates if the script loaded successfully (or all scripts, in the case of multiple scripts)
+        status === true if the script loaded successfully (or all scripts, in the case of multiple scripts). status === false if the script load failed -> but in older versions of IE, the callback will never fire at all (to handle this, set a timeout in your calling script)
+        
+    TODO
+        ordered loading of multiple scripts that have dependencies on one another
+        use options.timeout = 60 seconds, for older IEs that don't support onerror
         
 */
 
 /*jslint onevar: true, browser: true, devel: true, undef: true, eqeqeq: true, bitwise: true, regexp: false, strict: true, newcap: false, immed: true, nomen: false, evil: true*//*global window: true, self: true */
 
 function getScript(srcs, callback, options){
+    "use strict";
+
     /**
      * Load a script into a <script> element
      * @param {String} src The source url for the script to load
@@ -58,15 +59,15 @@ function getScript(srcs, callback, options){
         var charset = options.charset,
             keep = options.keep,
             target = options.target,
-            async = options.async,
+            async = (options.async !== false),
             document = target.document,
             head = document.getElementsByTagName('head')[0],
             script = document.createElement('script'),
             loaded = false;
             
         function finish(){
-            // Handle memory leak in IE
-            script.onload = script.onreadystatechange = null;
+            // Clean up circular references to prevent memory leaks in IE
+            script.onload = script.onreadystatechange = script.onerror = null;
             
             // Remove script element once loaded
             if (!keep){
@@ -87,11 +88,11 @@ function getScript(srcs, callback, options){
             }
         };
         
-        // NOTE: doesn't work in IE
-        script.onerror = finish;                
+        // NOTE: doesn't work in IE. Maybe IE9?
+        script.onerror = finish;
         
-        // Async loading (extra hinting for compliant browsers; defaults to true)
-        script.async = (async === false);
+        // Async loading (extra hinting for compliant browsers)
+        script.async = async;
         
         // Apply the src
         script.src = src;
