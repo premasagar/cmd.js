@@ -39,7 +39,10 @@
         getScript(["jquery.js", "example.js"], callback);
         
     to do
-        synchronous loading of multiple scripts that have dependencies on one another
+        ordered loading of multiple scripts that have dependencies on one another
+        
+    callback(status)
+        status indicates if the script loaded successfully (or all scripts, in the case of multiple scripts)
         
 */
 
@@ -60,25 +63,33 @@ function getScript(srcs, callback, options){
             head = document.getElementsByTagName('head')[0],
             script = document.createElement('script'),
             loaded = false;
+            
+        function finish(){
+            // Handle memory leak in IE
+            script.onload = script.onreadystatechange = null;
+            
+            // Remove script element once loaded
+            if (!keep){
+                head.removeChild(script); 
+            }                    
+            callback.call(target, loaded);
+        }
         
         script.type = 'text/javascript'; // This is the default for HTML5 documents, but should should be applied for pre-HTML5 documents, or errors may be seen in some browsers.
         script.charset = charset;
+        
         script.onload = script.onreadystatechange = function(){
             var state = this.readyState;
             
             if (!loaded && (!state || state === "complete" || state === "loaded")){
-                // Handle memory leak in IE
-                script.onload = script.onreadystatechange = null;
-                
-                // Remove script element once loaded
-                if (!keep){
-                    head.removeChild(script); 
-                }
-                
                 loaded = true;
-                callback.call(target);
+                finish();
             }
         };
+        
+        // NOTE: doesn't work in IE
+        script.onerror = finish;                
+        
         // Async loading (extra hinting for compliant browsers; defaults to true)
         script.async = (async === false);
         
@@ -102,13 +113,13 @@ function getScript(srcs, callback, options){
 
     function multiple(srcs, callback, options){
         var length = srcs.length,
-            loaded = 0,
+            loadCount = 0,
             checkIfComplete, i;
         
         // Check if all scripts have loaded
-        checkIfComplete = function(){
-            if (++loaded === length){
-                callback.call(options.target);
+        checkIfComplete = function(loaded){
+            if (!loaded || ++loadCount === length){
+                callback.call(options.target, loaded);
             }
         };
         
