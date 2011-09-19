@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset=utf-8 />
+    <title>Demo | getScript Lite | Mishmash | Premasagar</title>
+    <style>
+      .result {
+        padding:10px;
+        margin:20px 0;
+        background:#ddd;
+      }
+    </style>
+</head>
+
+<body>
+    <h1><a href="http://github.com/premasagar/mishmash/tree/master/getscript/">Demo | getScript Lite | Mishmash | Premasagar</a></h1>
+
+    <div class="demo">
+
+        <h2>Test one - loading a single JavaScript file</h2>
+        
+        <p><strong><em>Inline JS:</em></strong></p>
+        
+        <code>getScript("script-one.js");</code>
+
+        <p><strong><em>script-one.js contents:</em></strong></p>
+        
+        <code>$(".result-one pre").html("script one loaded");</code>
+
+        <div class="result result-one">
+          <h2>Result</h2>
+          <pre></pre>
+        </div>
+
+        <h2>Test two - loading a single JavaScript file, with callback</h2>
+
+        <p><strong><em>Inline JS:</em></strong></p>
+
+        <pre><code>getScript("script-two.js", function(status){
+  if (status === true) {
+    $(".result-two pre").html(result);
+  }
+});</code></pre>
+        
+        <p><strong><em>script-two.js contents:</em></strong></p>
+        
+        <code>var result = "script two loaded";</code>
+
+        <div class="result result-two">
+          <h2>Result</h2>
+          <pre></pre>
+        </div>
+
+    </div>
+      
+      
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="../getscript-lite.js"></script>
+    <script>
+      getScript("script-one.js");
+      
+      getScript("script-two.js", function(status){
+        if (status === true) {
+          $(".result-two pre").html(result);
+          console.log(result);          
+        }
+      });
+    </script>
+</body>
+</html>

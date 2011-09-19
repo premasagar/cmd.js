@@ -1,0 +1,1 @@
+result += "<p>script one loaded</p>";

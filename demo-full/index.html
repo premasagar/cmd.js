@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset=utf-8 />
+    <title>Demo | getScript Full | Mishmash | Premasagar</title>
+    <style>
+      .result {
+        padding:10px;
+        margin:20px 0;
+        background:#ddd;
+      }
+    </style>
+</head>
+
+<body>
+    <h1><a href="http://github.com/premasagar/mishmash/tree/master/getscript/">Demo | getScript Full | Mishmash | Premasagar</a></h1>
+
+    <div class="demo">
+
+        <h2>Loading multiple JavaScript files</h2>
+        
+        <p><strong><em>Inline JS:</em></strong></p>
+        
+        <pre><code>var result = "";
+
+getScript([
+  "script-one.js",
+  "script-two.js",
+  "script-three.js"
+], 
+"script-four.js",
+"script-five.js",
+[
+  "script-six.js",
+  "script-seven.js",
+  "script-eight.js"
+],
+"script-nine.js",
+[
+  "script-ten.js"
+], function(success){
+  if (success === true) {
+    $(".result").append(result);
+  }
+});</code></pre>
+
+        <p><strong><em>script-x.js contents:</em></strong></p>
+        
+        <code>result += "&lt;p&gt;script <em>x</em> loaded&lt;/p&gt;";</code>
+        
+        <p>(Note: <code>script-six.js</code> contains a large commented-out chunk of data to make it a large file.  <code>script-seven.js</code> and <code>script-eight.js</code> load before it, as they're in the same array, but later files wait until all three files have been downloaded.)</p>
+
+        <div class="result">
+          <h2>Result</h2>
+        </div>
+
+    </div>
+            
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="../getscript.js"></script>
+    <script>
+      var result = "";
+      getScript([
+          "script-one.js",
+          "script-two.js",
+          "script-three.js"
+        ], 
+        "script-four.js",
+        "script-five.js",
+        [
+          "script-six.js",
+          "script-seven.js",
+          "script-eight.js"
+        ],
+        "script-nine.js",
+        [
+          "script-ten.js"
+        ], function(success){
+          if (success === true) {
+            $(".result").append(result);
+          }
+        });
+    </script>
+</body>
+</html>
