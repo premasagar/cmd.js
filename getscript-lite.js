@@ -3,7 +3,7 @@
 *   github.com/premasagar/mishmash/tree/master/getscript/
 *
 *//*
-    load single or multiple JavaScript files, with callbacks and optional settings
+    Flexible JavaScript loader
 
     by Premasagar Rose
         dharmafly.com
@@ -18,31 +18,17 @@
     creates method
         getScript
         
-    examples
-        single script
-            getScript('http://example.com/jquery.js', callback);
-        
-        set options
-            charset:
-                added as an attribute to the <script> element ('utf-8' by default);
-            target:
-                an iframe or other window (global 'window' by default);
-            keep:
-                boolean - should the script element in the document head remain after the script has loaded? (false by default)
-            async: whether async attribute is added (true by default)
+    usage
+        load a single script
+            // as with getscript.js full version
             
-        getScript('http://example.com/jquery.js', callback, {charset:'utf-8', target:window, keep:false});
+        load a single script, with a callback
+            // as with getscript.js full version
+            
+        set config options
+            // as with getscript.js full version, except `options.path` not accepted
         
-        // multiple scripts
-        getScript(["jquery.js", "example.js"], callback);
-        
-    callback(status)
-        status === true if the script loaded successfully (or all scripts, in the case of multiple scripts). status === false if the script load failed -> but in older versions of IE, the callback will never fire at all (to handle this, set a timeout in your calling script)
-        
-    TODO
-        use options.timeout = 60 seconds, for older IEs that don't support onerror
-        
-*//*global self */
+*//*global window */
 
 
 
@@ -62,9 +48,10 @@ function getScript(src, callback, options){
         target = options.target || window,
         keep = options.keep,
         document = target.document,
-        head = document.getElementsByTagName('head')[0],
-        script = document.createElement('script'),
-        loaded = false;
+        head = document.getElementsByTagName("head")[0],
+        script = document.createElement("script"),
+        loaded = false,
+        now = (new Date()).getTime();
         
     function finish(){
         // Clean up circular references to prevent memory leaks in IE
@@ -79,7 +66,7 @@ function getScript(src, callback, options){
         }
     }
     
-    script.type = 'text/javascript'; // This is the default for HTML5+ documents, but should should be applied for pre-HTML5 documents, or errors may be seen in some browsers.
+    script.type = "text/javascript"; // This is the default for HTML5+ documents, but should should be applied for pre-HTML5 documents, or errors may be seen in some browsers.
     script.charset = charset;
     
     script.onload = script.onreadystatechange = function(){
@@ -98,7 +85,7 @@ function getScript(src, callback, options){
     script.async = true;
     
     // Apply the src
-    script.src = src;
+    script.src = (options.path || "") + src + (options.noCache ? "?v=" + now : "");
     
     // Go...
     head.appendChild(script);
