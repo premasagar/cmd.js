@@ -78,7 +78,7 @@ Each successive argument is executed after the previous one has finished (i.e. i
 * **src**: (string) Path to a JavaScript file
 * **callback**: (function) Optional callback function to call when script has loaded
 * **options**: (object) Contains optional parameters:
-    * **charset**: (string) Added as an attribute to the <script> element (default: "utf-8")
+    * **charset**: (string) Added as an attribute to the script element (default: "utf-8")
     * **target**: (object) An iframe or other window (default: global `window` object)
     * **keep**: (boolean) Should the script element remain in the document head after the script has loaded? (default: false)
     * **path**: "http://example.com/javascript/", // path to prefix to all script urls (default: "")
