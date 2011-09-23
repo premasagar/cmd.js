@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang=en>
 <head>
     <meta charset=utf-8 />
-    <title>Demo | getScript Full | Mishmash | Premasagar</title>
+    <title>cmd.js: demo</title>
     <style>
       .result {
         padding:10px;
@@ -13,17 +13,17 @@
 </head>
 
 <body>
-    <h1><a href="http://github.com/premasagar/mishmash/tree/master/getscript/">Demo | getScript Full | Mishmash | Premasagar</a></h1>
+    <h1><a href="http://github.com/premasagar/cmd">cmd.js: demo</a></h1>
 
     <div class="demo">
 
-        <h2>Loading multiple JavaScript files</h2>
+        <h2>Load multiple JavaScript files</h2>
         
         <p><strong><em>Inline JS:</em></strong></p>
         
         <pre><code>var result = "";
 
-getScript([
+cmd([
   "script-one.js",
   "script-two.js",
   "script-three.js"
@@ -55,13 +55,12 @@ getScript([
         </div>
 
     </div>
-            
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-    <script src="../getscript.js"></script>
+    <script src="../cmd.js"></script>
     <script>
       var result = "";
-      getScript([
+      cmd([
           "script-one.js",
           "script-two.js",
           "script-three.js"

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang=en>
 <head>
     <meta charset=utf-8 />
-    <title>Demo | getScript Lite | Mishmash | Premasagar</title>
+    <title>cmd.js: /lib/getscript.js demo</title>
     <style>
       .result {
         padding:10px;
@@ -13,15 +13,15 @@
 </head>
 
 <body>
-    <h1><a href="http://github.com/premasagar/mishmash/tree/master/getscript/">Demo | getScript Lite | Mishmash | Premasagar</a></h1>
+    <h1><a href="http://github.com/premasagar/cmd/tree/master/lib/getscript.js">cmd.js: /lib/getscript.js demo</a></h1>
 
     <div class="demo">
 
-        <h2>Test one - loading a single JavaScript file</h2>
+        <h2>Load a single JavaScript file</h2>
         
         <p><strong><em>Inline JS:</em></strong></p>
         
-        <code>getScript("script-one.js");</code>
+        <code>getscript("script-one.js");</code>
 
         <p><strong><em>script-one.js contents:</em></strong></p>
         
@@ -32,11 +32,11 @@
           <pre></pre>
         </div>
 
-        <h2>Test two - loading a single JavaScript file, with callback</h2>
+        <h2>Load a single JavaScript file, with callback</h2>
 
         <p><strong><em>Inline JS:</em></strong></p>
 
-        <pre><code>getScript("script-two.js", function(status){
+        <pre><code>getscript("script-two.js", function(status){
   if (status === true) {
     $(".result-two pre").html(result);
   }
@@ -50,17 +50,16 @@
           <h2>Result</h2>
           <pre></pre>
         </div>
-
     </div>
       
       
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-    <script src="../getscript-lite.js"></script>
+    <script src="../lib/getscript.js"></script>
     <script>
-      getScript("script-one.js");
+      getscript("script-one.js");
       
-      getScript("script-two.js", function(status){
+      getscript("script-two.js", function(status){
         if (status === true) {
           $(".result-two pre").html(result);
           console.log(result);          
