@@ -1,4 +1,4 @@
-# cmd.js
+# [cmd.js](http://github.com/premasagar/cmd.js)
 
 cmd.js is a lightweight, asyncronous flow controller. It can execute a series of JavaScript files and passed functions in an orderly manner, either in parallel or in series, or a mixture of the two.
 

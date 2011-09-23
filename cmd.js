@@ -1,6 +1,6 @@
 /*!
 * cmd
-*   github.com/premasagar/cmd
+*   github.com/premasagar/cmd.js
 *
 *//*
     a lightweight, asyncronous flow controller
