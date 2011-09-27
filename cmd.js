@@ -3,7 +3,7 @@
 *   github.com/premasagar/cmd.js
 *
 *//*
-    a lightweight, asynchronous flow controller
+    a lightweight, asynchronous flow controller / file loader
 
     by Premasagar Rose
         premasagar.com
