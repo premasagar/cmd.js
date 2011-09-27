@@ -3,7 +3,7 @@
 *   github.com/premasagar/cmd.js
 *
 *//*
-    a lightweight, asyncronous flow controller
+    a lightweight, asynchronous flow controller
 
     by Premasagar Rose
         premasagar.com
@@ -57,7 +57,8 @@ var cmd = (function(window){
             }
         };
         
-        // NOTE: doesn't work in IE6-8. Works in IE9+
+        // NOTE: doesn't work in IE6-8, so 'failure' callbacks will not fire. Works in IE9+ and other browsers
+        // Currently, if you need to have a 'failure' callback in IE6-8, then setTimeout in the calling script and if the success callback hasn't fired within, say 30 seconds, then assume that the script failed to load. Future versions of cmd.js may allow `option.timeout`, to handle this situation.
         script.onerror = finish;
         
         // Async loading (extra hinting for compliant browsers)
