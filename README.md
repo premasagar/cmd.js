@@ -146,7 +146,8 @@ Example testing the callback status:
       }
     });    
 
-NOTE: In IE6-8, the callback will only fire if the script successfully loads. In IE9+, as with other browsers, the callback will also fire if the script fails to load (here, boolean `false` will be passed into the callback). Currently, if you need to have a "failure" callback in IE6-8, then setTimeout in the calling script and if the success callback hasn't fired within, say 30 seconds, then assume that the script failed to load. Future versions of cmd.js may allow `option.timeout`, to handle this situation.
+#### 'Failure' callbacks in IE6-8
+NOTE: In Internet Explorer 6, 7 and 8, the callback will only fire if the script successfully loads. In IE9+, as with other browsers, the callback will also fire if the script fails to load (here, boolean `false` will be passed into the callback). Currently, if you need to have a 'failure' callback in IE6-8, then setTimeout in the calling script and if the success callback hasn't fired within, say 30 seconds, then assume that the script failed to load. Future versions of cmd.js may allow `option.timeout`, to handle this situation.
 
 
 <!-- //Group callbacks -->
