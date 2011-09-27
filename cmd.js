@@ -57,7 +57,7 @@ var cmd = (function(window){
             }
         };
         
-        // NOTE: doesn't work in IE. Maybe IE9?
+        // NOTE: doesn't work in IE6-8. Works in IE9+
         script.onerror = finish;
         
         // Async loading (extra hinting for compliant browsers)
@@ -94,8 +94,8 @@ var cmd = (function(window){
                 
             // Only proceed if the item is 'truthy'
             // This allows conditionals to be used, e.g. to load scripts under certain circumstances, such as
-            // cmd("1.js", isTheSkyBlue ? "2.js" : null)
-            if (item){
+            // cmd("1.js", isTheSkyBlue ? "2.js" : null, "3.js")
+            if (item !== null){
                 // script src
                 if (typeof item === "string"){
                     getscript(item, nextItem, options);
