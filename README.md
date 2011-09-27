@@ -1,19 +1,19 @@
 # [cmd.js](http://github.com/premasagar/cmd.js)
 
-cmd.js is a lightweight, asyncronous flow controller. It can load and execute a series of JavaScript files and passed functions in an orderly manner, either in parallel or in series, or a mixture of the two.
+cmd.js is a lightweight, asynchronous flow controller / file loader. It can load and execute a series of JavaScript files and passed functions in an orderly manner, either in parallel or in series, or a mixture of the two.
 
 ## Example usage
 
 **Load a single JavaScript file into the current page**
 
-    cmd('http://example.com/foo.js');
+    cmd("http://example.com/foo.js");
 
     
 **Load a single JavaScript file, with a callback function**
 
 Callbacks fire when a script loads.  The callback is passed a single argument: `success`, a boolean that is `true` if all scripts loaded successfully; `false` if the at least one script load failed
 
-    cmd('http://example.com/foo.js', loadComplete);    
+    cmd("http://example.com/foo.js", loadComplete);    
 
     
 **Load a single JavaScript file, with a callback, overriding default options**
@@ -167,19 +167,20 @@ NOTE: In Internet Explorer 6, 7 and 8, the callback will only fire if the script
 
 ### getscript.js
 
-getscript.js is used internally by cmd.js. It has all the script loading options of cmd.js, but only allows a single script src to be loaded at a time.
+getscript.js is a barebones, standalone, script loader. It has all the script loading options of cmd.js, but only allows a single script src to be loaded at a time. It can be used separately to cmd.js as a single script loader.
 
-It can be used separately to cmd.js as a single script loader. It dynamically loads a `<script>` element to a page, with a success/failure callback and optional configuration (including all the script-related options from cmd.js).
+It dynamically loads a `<script>` element to a page, with a success/failure callback and optional configuration.
 
 #### getscript.js options
 
     getScript(
-        'foo.js', 
+        "foo.js", 
         callback, 
         {
             charset: "utf-16", 
             target:this, 
-            keep:true
+            keep:true,
+            noCache: true
         }
     );  
 
