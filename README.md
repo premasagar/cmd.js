@@ -129,7 +129,7 @@ Possible arguments to pass to `cmd()` are:
     * **target**: (object) An iframe or other window (default: global `window` object)
     * **keep**: (boolean) Should the script element remain in the document head after the script has loaded? (default: false)
     * **path**: (string) Path to prefix to all script urls, such as "http://example.com/javascript/" (default: "")
-    * **noCache**: (bookean) Set to true in debug / development mode to prevent scripts being cached by the browser (default: false)
+    * **noCache**: (boolean) Set to true in debug / development mode to prevent scripts being cached by the browser (default: false)
 
 
 ### Callbacks
